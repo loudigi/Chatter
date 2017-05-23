@@ -10,6 +10,9 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
+<input type="text" id="postAdd" placeholder="Enter Chats">
+<button class="postChats">Post</button>
+
 <div id="response"></div>
 <button id="getChats" class="btn btn-primary">Get Chats</button>
 
@@ -24,8 +27,15 @@
 
         $(document).ready(function () {
 
+            //post chats
+            $("#postChats").click(function () {
+                var postMessage = $('#postAdd').val();
+                $.post("@Url.Action("PostChats", "Chats")", {"Message": postMessage})
+            });
+
             //initialization code here
             $("#getChats").click(pullChats);
+
 
             function pullChats () {
                 $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
@@ -48,10 +58,6 @@
 
             }
 
-
-            $("#postChats").click(
-
-                );
         }
         );
 
