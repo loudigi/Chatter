@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Chatter.Models;
+using Newtonsoft.Json;
 
 namespace Chatter.Controllers
 {
@@ -22,12 +23,27 @@ namespace Chatter.Controllers
         }
 
         // Test jSON
+
+        //SELECT Chats.Message, AspNetUsers.Id
+        //FROM Chats
+        //INNER JOIN
+        //AspNetUsers ON Chats.UserID = AspNetUsers.Id
+        //ORDER BY Chats.Timestamp DESC
+
         public JsonResult TestJson()
         {
-            string jsonTest = "{ \"firstName\": \"Melanie\",\"lastName\": \"McGee\",\"children\": [{\"firstName\": \"Mira\", \"age\": 13 },{\"firstName\": \"Ethan\", \"age\": null }] }";
+            var chats = from Chats in db.Chats
+                        orderby
+                          Chats.Timestamp descending
+                        select new
+                        {
+                            Chats.Message,
+                            Chats.AspNetUser.Id
+                        };
+            var output = JsonConvert.SerializeObject(chats.ToList());
 
-                return Json(jsonTest, JsonRequestBehavior.AllowGet);
-            }
+            return Json(output, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Chats/Details/5
         public ActionResult Details(int? id)

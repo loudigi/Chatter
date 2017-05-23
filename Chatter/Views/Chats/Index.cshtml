@@ -20,19 +20,29 @@
         //Notice this combines Razor syntax (@Url.Action()) in order to
         //have the compiler figure out the exact path of the controller,
         //alongside of jQuery.
-        var button = document.getElementById('getChats');
 
-        button.onclick = function () {
-            $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
-                var jsonTest = JSON.parse(serverResponse);
-                console.log(jsonTest);
-                $("#response").text(jsonTest.firstName +" "+ jsonTest.lastName);
-            });
 
+        $(document).ready(function () {
+
+            //initialization code here
+            $("#getChats").click(
+                function () {
+                    $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
+                        var jsonTest = JSON.parse(serverResponse);
+                        console.log(jsonTest);
+
+                        //$("#response").text(jsonTest.firstName +" "+ jsonTest.lastName);
+                    })
+
+                }
+
+        );
+
+            $("#postChats").click(
+
+                );
         }
-
-
-
+        );
 
 
 
@@ -42,37 +52,3 @@
 
 
 
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Message)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AspNetUser.Email)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AspNetUser.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@
