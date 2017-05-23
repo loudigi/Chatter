@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Chatter.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
 
 namespace Chatter.Controllers
 {
@@ -38,12 +39,30 @@ namespace Chatter.Controllers
                         select new
                         {
                             Chats.Message,
-                            Chats.AspNetUser.Id
+                            Chats.AspNetUser.UserName
                         };
             var output = JsonConvert.SerializeObject(chats.ToList());
 
             return Json(output, JsonRequestBehavior.AllowGet);
         }
+
+        //Posting Chats
+        public JsonResult PostChats([Bind(Include = "Message")] Chat chat)
+        {
+
+            chat.Timestamp = DateTime.Now;
+
+            string currentUserId = User.Identity.GetUserId();
+            chat.AspNetUser = db.AspNetUsers.FirstOrDefault(x => x.Id == currentUserId);
+
+            if (ModelState.IsValid)
+            {
+                db.Chats.Add(chat);
+                db.SaveChanges();
+            }
+            return new JsonResult() { Data = JsonConvert.SerializeObject(chat.ID), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
 
         // GET: Chats/Details/5
         public ActionResult Details(int? id)
