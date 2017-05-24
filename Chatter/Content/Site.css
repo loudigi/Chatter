@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+li{
+    color:#232323;
+    list-style:none;
+    height:40px;
+    padding:10px;
+}
