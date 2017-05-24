@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Chatter.Models.Chat>
+@model IEnumerable<Chatter.Models.Chat>
 
 @{
     ViewBag.Title = "Index";
@@ -10,11 +10,15 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<input type="text" id="postAdd" placeholder="Enter Chats">
-<button class="postChats">Post</button>
+    <input type="text" id="postAdd" placeholder="Enter Chats">
 
-<div id="response"></div>
-<button id="getChats" class="btn btn-primary">Get Chats</button>
+<button id="postChats" class="btn btn-success">Post Chat</button>
+
+<p>
+    <div id="response"></div>
+    <button id="getChats" class="btn btn-primary">Get Chats</button>
+</p>
+
 
 @section Scripts {
     <script>
@@ -30,14 +34,19 @@
             //post chats
             $("#postChats").click(function () {
                 var postMessage = $('#postAdd').val();
-                $.post("@Url.Action("PostChats", "Chats")", {"Message": postMessage})
+
+                $.post("@Url.Action("PostChats", "Chats")", { "Message": postMessage }, function () {
+
+                    pullChats();
+
+                })
+
             });
 
             //initialization code here
             $("#getChats").click(pullChats);
 
-
-            function pullChats () {
+            function pullChats() {
                 $.get("@Url.Action("TestJson","Chats")", function (serverResponse) {
                     var jsonTest = JSON.parse(serverResponse);
                     //console.log(jsonTest);
@@ -65,7 +74,6 @@
 
     </script>
 }
-
 
 
 
