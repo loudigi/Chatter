@@ -4,20 +4,38 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Splatter Chatter</h2>
+@*<h2>Splatter Chatter</h2>*@
 
 <p>
    @*@Html.ActionLink("Create New", "Create")*@
 </p>
 
-    <input type="text" id="postAdd" placeholder="Enter Chats">
 
-<button id="postChats" class="btn btn-success">Post Chat</button>
 
-<p>
-    <div id="response"></div>
-    <button id="getChats" class="btn btn-primary">Get Chats</button>
-</p>
+
+<div class="panel panel-default">
+    <div class="panel-heading text-center"><h2>Splatter Chatter</h2></div>
+    <div class="panel-body">
+        
+        <p>
+            <div id="response"></div>
+            
+        </p>
+    </div>
+    <div class="panel-footer">
+        
+        <input type="text" id="postAdd" placeholder="Enter Chats">
+
+        <button id="postChats" class="btn btn-success">Post Chat</button>
+        <button id="getChats" class="btn btn-primary">Get Chats</button>
+    </div>
+</div>
+
+
+
+
+
+
 
 
 @section Scripts {
